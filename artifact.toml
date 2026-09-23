@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Storm Automate"
+description = "A premium B2B marketing website for Storm Automate, an AI automation systems partner helping established appointment-based businesses plug revenue leaks from lead response through booked appointments."
+version = "1.0.0"
+id = "artifacts/storm-automate"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26121
+
+[services.development]
+run = "pnpm --filter @workspace/storm-automate run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/storm-automate", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/storm-automate/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26121"
+BASE_PATH = "/"
